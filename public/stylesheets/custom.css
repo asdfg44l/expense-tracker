@@ -1,0 +1,74 @@
+.total-amount {
+  font-size: 64px;
+  color: #fd7e14;
+}
+
+.record .icon {
+  color: #65b2bf;
+  padding-right: 0;
+}
+
+.record:nth-child(odd) {
+  background: #eeeeee;
+}
+
+.flex-column-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.record .name,
+.record .amount,
+.btn,
+.font-size-larger {
+  font-size: larger;
+}
+
+.font-size-large {
+  font-size: large;
+}
+ 
+.button-box {
+  background-color: #ffffff;
+}
+
+.btn-major {
+  background-color: #fd7e14;
+  color: #ffffff;
+}
+
+.btn-major:hover {
+  background-color: #bd3e00;
+  color: #ffffff;
+}
+
+.border-major {
+  border-color: #fd7e14 !important;
+}
+
+.container-narrow {
+  width: 50vw;
+}
+
+@media screen and (max-width: 768px) {
+  .record .icon {
+    margin-top: 2vh;
+  }
+
+  .button-box {
+    background-color: transparent;
+  }
+
+  .container-narrow {
+    width: 100vw;
+  }
+
+  .flex-column-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+} 
