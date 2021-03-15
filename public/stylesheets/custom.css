@@ -1,3 +1,7 @@
+body {
+  font-family: 'Microsoft JhengHei', Arial, Helvetica, sans-serif;
+}
+
 .total-amount {
   font-size: 64px;
   color: #fd7e14;
@@ -51,6 +55,18 @@
 .container-narrow {
   width: 50vw;
 }
+
+/* custom input start */
+.custom-input {
+  box-shadow: none !important;
+  border-width: 0px !important;
+  border-bottom: 2px solid #a5a58d !important;
+  border-radius: 0 !important;
+}
+.custom-input:focus {
+  border-color: #6b705c !important;
+}
+/* custom input end */
 
 @media screen and (max-width: 768px) {
   .record .icon {
