@@ -1,22 +1,34 @@
 const express = require('express')
 const router = express.Router()
 
+//record category
+const category = require('../../config/category.json').category
+
 router.get('/new', (req, res) => {
     const config = {
-        title: '新增支出'
+        title: '新增支出',
+        action: '/records'
     }
-    res.render('new', { config })
+    res.render('new', { config, category })
+})
+
+router.post('/', (req, res) => {
+    const record = req.body
+    console.log("New: ", record)
+    res.render('index')
 })
 
 router.get('/:id/edit', (req, res) => {
     const config = {
-        title: '修改支出'
+        title: '修改支出',
+        action: '/records/123?_method=PUT'
     }
-    res.render('edit', { config })
+    res.render('edit', { config, category })
 })
 
 router.put('/:id', (req, res) => {
-    console.log(req.body)
+    const record = req.body
+    console.log("Edit: ", record)
     res.render('index')
 })
 

@@ -2,7 +2,8 @@ const express = require('express')
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-
+//mongodb
+// require('./config/mongoose')
 const route = require('./routes')
 
 //PORT
