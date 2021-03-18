@@ -1,11 +1,14 @@
 const express = require('express')
 const exhbs = require('express-handlebars')
 const session = require('express-session')
-const usePassport = require('./config/passport')
+const flash = require('connect-flash')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+
 require('./config/dotenv').loadEnv() //load env
 const hbsHelpers = require('./util/handlebarsHelpers')
+const usePassport = require('./config/passport')
+
 //mongodb
 require('./config/mongoose')
 const route = require('./routes')
@@ -32,7 +35,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
-
+//connect-flash
+app.use(flash())
 
 //passport
 usePassport(app)
@@ -41,6 +45,9 @@ usePassport(app)
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated()
     res.locals.user = req.user
+    res.locals.warning_msg = req.flash('warning_msg')
+    res.locals.success_msg = req.flash('success_msg')
+
     return next()
 })
 

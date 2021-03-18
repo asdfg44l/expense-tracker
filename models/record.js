@@ -21,6 +21,12 @@ const recordSchema = new Schema({
     merchant: {
         type: String,
         require: true
+    },
+    userId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        index: true,
+        require: true
     }
 })
 

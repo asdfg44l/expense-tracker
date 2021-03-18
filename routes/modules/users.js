@@ -33,8 +33,7 @@ router.post('/register', (req, res) => {
     }
     User.findOne({ email }).then(user => {
         if (user) {
-            console.log('此電子郵件已被註冊')
-            return
+            return req.flash('warning_msg', '此電子郵件已被註冊')
         }
         User.create({
             ...req.body
@@ -47,6 +46,7 @@ router.post('/register', (req, res) => {
 router.get('/logOut', (req, res) => {
     req.logOut()
     res.redirect('/login')
+    return req.flash('success_msg', '您已成功登出')
 })
 
 module.exports = router
