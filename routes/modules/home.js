@@ -27,14 +27,13 @@ router.get('/', async (req, res) => {
 
             return categoryFilter && yearFilter && monthFilter
         })
-        //dateFormat => yyyy-mm-dd 
-        records.forEach(record => {
-            record.date = dateTimeFormat(record.date)
-        })
+        //dateFormat => yyyy-mm-dd
         //iconFilter get icon by compare to category
         records.forEach(record => {
+            record.date = dateTimeFormat(record.date)
             record.iconName = categories.find(item => item.name === record.category).className
         })
+
         //計算總金額
         let totalAmount = records.reduce((prev, record) => prev += record.amount, 0)
 
