@@ -26,7 +26,6 @@ router.post('/', (req, res) => {
     })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
-
 })
 
 router.get('/:id/edit', (req, res) => {

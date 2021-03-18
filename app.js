@@ -1,7 +1,10 @@
 const express = require('express')
 const exhbs = require('express-handlebars')
+const session = require('express-session')
+const usePassport = require('./config/passport')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+require('./config/dotenv').loadEnv() //load env
 const hbsHelpers = require('./util/handlebarsHelpers')
 //mongodb
 require('./config/mongoose')
@@ -22,6 +25,24 @@ app.use(methodOverride('_method'))
 
 //public
 app.use(express.static('public'))
+
+//session
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+
+
+//passport
+usePassport(app)
+
+//
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.user = req.user
+    return next()
+})
 
 //route
 app.use(route)
