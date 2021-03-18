@@ -3,40 +3,24 @@
   <div class="col-md-8 d-flex justify-content-center">
     <form action="/" method="get" class="row">
       <div class="col-auto">
-        <select 
-          class="form-control"
-          name="category"
-          aria-label="select category"
-          id="category"
-          onchange="submit();"
-        >
+        <select class="form-control" name="category" aria-label="select category" id="category" onchange="submit();">
           <option value="">所有分類</option>
           {{#each categories}}
-          <option value="{{this.name}}" {{#isEqual ../categoryValue this.name }}selected{{/isEqual}}>{{this.title}}</option>
+          <option value="{{this.name}}" {{#isEqual ../categoryValue this.name }}selected{{/isEqual}}>{{this.title}}
+          </option>
           {{/each}}
         </select>
       </div>
       <div class="col-auto">
-        <input
-          type="text"
-          class="form-control"
-          name="year"
-          placeholder="西元年 ex. 1996"
-          aria-label="select category"
-          onblur="submit()"
-          value="{{ year }}"
-        >
+        <input type="text" class="form-control" name="year" placeholder="西元年 ex. 1996" aria-label="select category"
+          onblur="submit()" value="{{ year }}">
       </div>
       <div class="col-auto">
-        <select 
-          class="form-control"
-          name="month"
-          aria-label="select month"
-          onchange="submit();"
-        >
+        <select class="form-control" name="month" aria-label="select month" onchange="submit();">
           <option value="all">所有月份</option>
           {{#each monthList}}
-          <option value="{{this.value}}" {{#isEqual ../monthValue this.value}}selected{{/isEqual}}>{{this.name}}</option>
+          <option value="{{this.value}}" {{#isEqual ../monthValue this.value}}selected{{/isEqual}}>{{this.name}}
+          </option>
           {{/each}}
         </select>
       </div>
@@ -54,17 +38,18 @@
 
 <div class="row flex-md-nowrap record justify-content-center">
   <div class="col-9 border-bottom border-major">
+    {{#each records}}
     <div class="row pb-3">
       <div class="col-md-1 d-flex align-items-center justify-content-center icon">
         <i class="fas fa-home fa-2x"></i>
       </div>
       <div class="col-md-3 py-2 flex-column-center">
-        <div class="name mb-1">早餐</div>
-        <div class="date">2021/01/05</div>
+        <div class="name mb-1">{{ this.name }}</div>
+        <div class="date">{{ this.date }}</div>
       </div>
       <div class="col-md-4 flex-column-right flex-column-center">
-        <div class="amount mb-1">50</div>
-        <div class="marchant">早安豆漿</div>
+        <div class="amount mb-1">{{ this.amount }}</div>
+        <div class="marchant">{{ this.merchant }}</div>
       </div>
       <div class="col-md-4 d-flex justify-content-end align-items-center button-box">
         <form action="/records/123/edit" method="get">
@@ -75,8 +60,9 @@
         </form>
       </div>
     </div>
+    {{/each}}
   </div>
-  
+
 </div>
 
 <div class="row justify-content-center">
