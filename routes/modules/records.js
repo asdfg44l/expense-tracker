@@ -4,6 +4,9 @@ const Record = require('../../models/record')
 //record category
 const category = require('../../config/category.json').category
 
+//util
+const dateTimeFormat = require('../../util/dateTimeFormat')
+
 router.get('/new', (req, res) => {
     const config = {
         title: '新增支出',
@@ -23,17 +26,37 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:id/edit', (req, res) => {
+    const record_id = req.params.id
     const config = {
         title: '修改支出',
-        action: '/records/123?_method=PUT'
+        action: `/records/${record_id}?_method=PUT`
     }
-    res.render('edit', { config, category })
+    Record.findById(record_id)
+        .lean()
+        .then(record => {
+            record.date = dateTimeFormat(record.date)
+            return res.render('edit', { config, category, record })
+        })
+        .catch(err => console.log(err))
 })
 
 router.put('/:id', (req, res) => {
-    const record = req.body
-    console.log("Edit: ", record)
-    res.render('index')
+    const { name, category, date, amount, merchant } = req.body
+    const record_id = req.params.id
+    // console.log("Edit: ", record_edit)
+    Record.findById(record_id)
+        .then(record => {
+            console.log('inner: ', record)
+            record.name = name
+            record.category = category
+            record.date = date
+            record.amount = amount
+            record.merchant = merchant
+            return record.save()
+        })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+
 })
 
 router.delete('/:id', (req, res) => {
