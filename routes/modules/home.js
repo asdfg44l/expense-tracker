@@ -22,7 +22,9 @@ router.get('/', (req, res) => {
                 record.date = dateTimeFormat(record.date)
             })
             //iconFilter get icon by compare to category
-
+            // records.forEach(record => {
+            //     record.date = dateTimeFormat(record.date)
+            // })
             //計算總金額
             let totalAmount = records.reduce((prev, record) => prev += record.amount, 0)
 
