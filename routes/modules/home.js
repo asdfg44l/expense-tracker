@@ -15,16 +15,24 @@ router.get('/', (req, res) => {
     Record.find({ userId })
         .lean()
         .then(records => {
-            //datefilter
+            //searchFilter
+
+            //dateFormat => yyyy-mm-dd 
             records.forEach(record => {
                 record.date = dateTimeFormat(record.date)
             })
+            //iconFilter get icon by compare to category
+
+            //計算總金額
+            let totalAmount = records.reduce((prev, record) => prev += record.amount, 0)
+
             return res.render('index', {
                 categories,
                 categoryValue: category,
                 year,
                 monthValue: month,
                 monthList,
+                totalAmount,
                 records
             })
         })
