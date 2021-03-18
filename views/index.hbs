@@ -56,7 +56,7 @@
           <button class="btn btn-outline-primary btn-sm" type="submit">修改</button>
         </form>
         <form action="/records/{{ this._id }}?_method=DELETE" method="POST">
-          <button class="btn btn-danger btn-sm ml-2" type="submit">刪除</button>
+          <button class="btn btn-danger btn-sm ml-2" type="submit" onclick="return confirmDelete();">刪除</button>
         </form>
       </div>
     </div>
@@ -70,3 +70,9 @@
     <a href="/records/new" class="btn btn-block btn-major">新增支出</a>
   </div>
 </div>
+
+<script>
+  function confirmDelete() {
+    return confirm('你確定要刪除該筆紀錄嗎?')
+  }
+</script>

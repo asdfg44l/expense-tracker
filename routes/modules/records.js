@@ -61,8 +61,12 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const record_id = req.params.id
-    console.log("DELETE: ", record_id)
-    res.redirect('/')
+    Record.findById(record_id)
+        .then(record => {
+            record.remove()
+            return res.redirect('/')
+        })
+        .catch(err => console.log(err))
 })
 
 module.exports = router

@@ -23,10 +23,10 @@
                     <div class="form-group">
                         <label for="category">類別<span class="text-danger"></span></label>
                         <select class="form-control custom-input" name="category" id="category">
-                            <option value="" disabled>請選擇</option>
+                            <option value="">請選擇</option>
                             {{#each category}}
                             <option value="{{ this.name }}" {{#isEqual ../record.category
-                                this.name}}checked{{/isEqual}}>
+                                this.name}}selected{{/isEqual}}>
                                 {{ this.title }}
                             </option>
                             {{/each}}
