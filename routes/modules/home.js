@@ -12,12 +12,21 @@ const dateTimeFormat = require('../../util/dateTimeFormat')
 router.get('/', async (req, res) => {
     const userId = req.user._id
     const { category, year, month } = req.query
+    console.log({ category, year, month })
     try {
         let records = await Record.find({ userId }).lean()
         let categories = await Category.find().lean()
-        console.log(categories)
         //searchFilter
+        records = records.filter(record => {
+            let recordYear = record.date.getFullYear().toString()
+            let recordMonth = record.date.getMonth().toString()
 
+            const categoryFilter = category === record.category || !category
+            const yearFilter = year === recordYear || !year
+            const monthFilter = month === recordMonth || !month || month === 'all'
+
+            return categoryFilter && yearFilter && monthFilter
+        })
         //dateFormat => yyyy-mm-dd 
         records.forEach(record => {
             record.date = dateTimeFormat(record.date)
