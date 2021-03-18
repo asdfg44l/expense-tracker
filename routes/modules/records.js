@@ -16,9 +16,13 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    const record = req.body
+    const { name, category, date, amount, merchant } = req.body
+    //缺欄位
+    if (!name || !category || !date || !amount || !merchant) {
+        return '所有欄位皆為必填'
+    }
     Record.create({
-        ...record
+        ...req.body
     })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
