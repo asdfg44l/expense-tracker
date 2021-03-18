@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const hbsHelpers = require('./util/handlebarsHelpers')
 //mongodb
-// require('./config/mongoose')
+require('./config/mongoose')
 const route = require('./routes')
 
 //PORT
