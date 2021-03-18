@@ -3,13 +3,17 @@ const Category = require('../category')
 
 const categoryList = require('../../config/category.json').category
 
-db.once('open', () => {
-  return Promise.all(categoryList.map(item => {
-    return Category.create({
-      ...item
-    })
-  }))
-    .then(() => console.log('Category seed build complete'))
-    .catch(err => console.log(err))
-    .finally(() => process.exit())
+db.once('open', async () => {
+  try {
+    await Promise.all(categoryList.map(async (item) => {
+      let category = await Category.findOne({ name: item.name })
+      if (!category) {
+        return Category.create(item)
+      }
+    }))
+    console.log('Category seed build complete')
+  } catch (e) {
+    console.warn(e)
+  }
+  finally { process.exit() }
 })
