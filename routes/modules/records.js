@@ -16,25 +16,29 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+    const userId = req.user._id
     const { name, category, date, amount, merchant } = req.body
     //缺欄位
     if (!name || !category || !date || !amount || !merchant) {
-        return '所有欄位皆為必填'
+        req.flash('warning_msg', '所有欄位皆為必填')
+        return res.redirect('/records/new')
     }
     Record.create({
-        ...req.body
+        ...req.body,
+        userId
     })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
 })
 
 router.get('/:id/edit', (req, res) => {
+    const userId = req.user._id
     const record_id = req.params.id
     const config = {
         title: '修改支出',
         action: `/records/${record_id}?_method=PUT`
     }
-    Record.findById(record_id)
+    Record.findOne({ _id: record_id, userId })
         .lean()
         .then(record => {
             record.date = dateTimeFormat(record.date)
@@ -44,10 +48,11 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    const { name, category, date, amount, merchant } = req.body
+    const userId = req.user._id
     const record_id = req.params.id
+    const { name, category, date, amount, merchant } = req.body
     // console.log("Edit: ", record_edit)
-    Record.findById(record_id)
+    Record.findOne({ _id: record_id, userId })
         .then(record => {
             console.log('inner: ', record)
             record.name = name
@@ -63,8 +68,9 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
+    const userId = req.user._id
     const record_id = req.params.id
-    Record.findById(record_id)
+    Record.findOne({ _id: record_id, userId })
         .then(record => {
             record.remove()
             return res.redirect('/')

@@ -10,9 +10,9 @@ const monthList = require('../../config/monthList.json').month
 const dateTimeFormat = require('../../util/dateTimeFormat')
 
 router.get('/', (req, res) => {
+    const userId = req.user._id
     const { category, year, month } = req.query
-    console.log(req.query)
-    Record.find()
+    Record.find({ userId })
         .lean()
         .then(records => {
             //datefilter
