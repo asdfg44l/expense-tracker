@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-
+const bcrypt = require('bcryptjs')
 const User = require('../../models/user')
 
 router.get('/login', (req, res) => {
@@ -19,7 +19,7 @@ router.get('/register', (req, res) => {
     res.render('register')
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     let errors = []
     const { name, email, password, confirmPassword } = req.body
     if (!name || !email || !password || !confirmPassword) {
@@ -31,17 +31,21 @@ router.post('/register', (req, res) => {
     if (errors.length) {
         return res.render('register', { ...req.body, errors })
     }
-    User.findOne({ email }).then(user => {
-        if (user) {
-            return req.flash('warning_msg', '此電子郵件已被註冊')
-        }
-        User.create({
-            ...req.body
-        })
-            .then(() => res.redirect('/users/login'))
-            .catch(err => console.log(err))
-    })
-        .catch(err => console.log(err))
+
+    try {
+        let user = await User.findOne({ email })
+
+        if (user) return req.flash('warning_msg', '此電子郵件已被註冊')
+
+        let salt = await bcrypt.genSalt(10)
+        let hash = await bcrypt.hash(password, salt) //generate hash
+
+        //register user
+        await User.create({ name, email, password: hash })
+        return res.redirect('/users/login')
+    } catch (e) {
+        console.warn(e)
+    }
 })
 
 router.get('/logOut', (req, res) => {
