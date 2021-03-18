@@ -9,11 +9,10 @@
           aria-label="select category"
           id="category"
           onchange="submit();"
-          value="{{ categoryValue }}"
         >
-          <option value="all" selected>所有分類</option>
+          <option value="">所有分類</option>
           {{#each categories}}
-          <option value="{{this.name}}">{{this.title}}</option>
+          <option value="{{this.name}}" {{#isEqual ../categoryValue this.name }}selected{{/isEqual}}>{{this.title}}</option>
           {{/each}}
         </select>
       </div>
@@ -22,7 +21,7 @@
           type="text"
           class="form-control"
           name="year"
-          placeholder="西元年 eg. 1984"
+          placeholder="西元年 ex. 1996"
           aria-label="select category"
           onblur="submit()"
           value="{{ year }}"
@@ -34,10 +33,11 @@
           name="month"
           aria-label="select month"
           onchange="submit();"
-          value="{{ monthValue }}"
         >
-          <option value="all" selected>所有月份</option>
-          <option value="1">一月</option>
+          <option value="all">所有月份</option>
+          {{#each monthList}}
+          <option value="{{this.value}}" {{#isEqual ../monthValue this.value}}selected{{/isEqual}}>{{this.name}}</option>
+          {{/each}}
         </select>
       </div>
     </form>
