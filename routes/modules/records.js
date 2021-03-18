@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const Record = require('../../models/record')
 //record category
 const category = require('../../config/category.json').category
 
@@ -14,8 +14,12 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
     const record = req.body
-    console.log("New: ", record)
-    res.render('index')
+    Record.create({
+        ...record
+    })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+
 })
 
 router.get('/:id/edit', (req, res) => {
