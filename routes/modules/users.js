@@ -49,8 +49,6 @@ router.post('/register', async (req, res) => {
         res.redirect('/users/login')
     } catch (e) {
         console.warn(e)
-    } finally {
-
     }
 })
 

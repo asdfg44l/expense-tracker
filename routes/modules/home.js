@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         //searchFilter
         records = records.filter(record => {
             let recordYear = record.date.getFullYear().toString()
-            let recordMonth = record.date.getMonth().toString()
+            let recordMonth = (record.date.getMonth() + 1).toString()
 
             //generate yearList 存取所有收支紀錄中的年份
             yearList = getRecordYear(recordYear, yearList)

@@ -51,10 +51,9 @@ router.put('/:id', (req, res) => {
     const userId = req.user._id
     const record_id = req.params.id
     const { name, category, date, amount, merchant } = req.body
-    // console.log("Edit: ", record_edit)
+
     Record.findOne({ _id: record_id, userId })
         .then(record => {
-            console.log('inner: ', record)
             record.name = name
             record.category = category
             record.date = date
