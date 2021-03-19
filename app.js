@@ -14,7 +14,7 @@ require('./config/mongoose')
 const route = require('./routes')
 
 //PORT
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 //app
 const app = express()
@@ -31,7 +31,7 @@ app.use(express.static('public'))
 
 //session
 app.use(session({
-    secret: process.env.SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }))
