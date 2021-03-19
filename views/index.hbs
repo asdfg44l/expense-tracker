@@ -12,12 +12,17 @@
         </select>
       </div>
       <div class="col-auto">
-        <input type="text" class="form-control" name="year" placeholder="西元年 ex. 1996" aria-label="select category"
-          onblur="submit()" value="{{ year }}">
+        <select class="form-control" name="year" aria-label="select month" onchange="submit();">
+          <option value="">所有年份</option>
+          {{#each yearList}}
+          <option value="{{ this }}" {{#isEqual ../yearValue this}}selected{{/isEqual}}>{{ this }}
+          </option>
+          {{/each}}
+        </select>
       </div>
       <div class="col-auto">
         <select class="form-control" name="month" aria-label="select month" onchange="submit();">
-          <option value="all">所有月份</option>
+          <option value="">所有月份</option>
           {{#each monthList}}
           <option value="{{this.value}}" {{#isEqual ../monthValue this.value}}selected{{/isEqual}}>{{this.name}}
           </option>

@@ -8,29 +8,38 @@ const monthList = require('../../config/monthList.json').month
 
 //util
 const dateTimeFormat = require('../../util/dateTimeFormat')
+const getRecordYear = require('../../util/getRecordYear')
 
 router.get('/', async (req, res) => {
     const userId = req.user._id
     const { category, year, month } = req.query
-    console.log({ category, year, month })
+
     try {
-        let records = await Record.find({ userId }).lean()
+        let records = await Record.find({ userId }).sort({ date: -1 }).lean()
         let categories = await Category.find().lean()
+        let yearList = new Set() //存取所有收支紀錄中的年份
+
         //searchFilter
         records = records.filter(record => {
             let recordYear = record.date.getFullYear().toString()
             let recordMonth = record.date.getMonth().toString()
 
+            //generate yearList 存取所有收支紀錄中的年份
+            yearList = getRecordYear(recordYear, yearList)
+
             const categoryFilter = category === record.category || !category
             const yearFilter = year === recordYear || !year
-            const monthFilter = month === recordMonth || !month || month === 'all'
+            const monthFilter = month === recordMonth || !month
 
             return categoryFilter && yearFilter && monthFilter
         })
-        //dateFormat => yyyy-mm-dd
-        //iconFilter get icon by compare to category
+
         records.forEach(record => {
+
+            //dateFormat => yyyy-mm-dd
             record.date = dateTimeFormat(record.date)
+
+            //iconFilter get icon by compare to category
             record.iconName = categories.find(item => item.name === record.category).className
         })
 
@@ -40,8 +49,9 @@ router.get('/', async (req, res) => {
         return res.render('index', {
             categories,
             categoryValue: category,
-            year,
+            yearValue: year,
             monthValue: month,
+            yearList,
             monthList,
             totalAmount,
             records

@@ -6,7 +6,7 @@ function twoDigit(num) {
 }
 
 function dateTimeFormat(date) {
-  let dateFormat = `${date.getFullYear()}-${twoDigit(date.getMonth())}-${twoDigit(date.getDate())}`
+  let dateFormat = `${date.getFullYear()}-${twoDigit(date.getMonth() + 1)}-${twoDigit(date.getDate())}`
   return dateFormat
 }
 
