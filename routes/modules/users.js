@@ -22,6 +22,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     let errors = []
     const { name, email, password, confirmPassword } = req.body
+
     if (!name || !email || !password || !confirmPassword) {
         errors.push({ message: '所有欄位皆為必填' })
     }
@@ -35,16 +36,21 @@ router.post('/register', async (req, res) => {
     try {
         let user = await User.findOne({ email })
 
-        if (user) return req.flash('warning_msg', '此電子郵件已被註冊')
+        if (user) {
+            req.flash('warning_msg', '此電子郵件已被註冊')
+            return res.render('register', { ...req.body })
+        }
 
         let salt = await bcrypt.genSalt(10)
         let hash = await bcrypt.hash(password, salt) //generate hash
 
         //register user
         await User.create({ name, email, password: hash })
-        return res.redirect('/users/login')
+        res.redirect('/users/login')
     } catch (e) {
         console.warn(e)
+    } finally {
+
     }
 })
 
