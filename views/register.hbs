@@ -13,21 +13,22 @@
                     <div class="form-group">
                         <label for="name">姓名<span class="text-danger">*</span></label>
                         <input class="form-control custom-input" type="text" name="name" placeholder="請輸入姓名"
-                            value="{{ name }}">
+                            value="{{ name }}" required>
                     </div>
                     <div class="form-group">
                         <label for="email">電子信箱<span class="text-danger">*</span></label>
                         <input class="form-control custom-input" type="email" name="email" placeholder="請輸入電子郵件地址"
-                            value="{{ email }}">
+                            value="{{ email }}" required>
                     </div>
                     <div class="form-group">
                         <label for="password">密碼<span class="text-danger">*</span></label>
-                        <input class="form-control custom-input" type="password" name="password" placeholder="請輸入密碼">
+                        <input class="form-control custom-input" type="password" name="password" placeholder="請輸入密碼"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">確認密碼<span class="text-danger">*</span></label>
                         <input class="form-control custom-input" type="password" name="confirmPassword"
-                            placeholder="請確認密碼">
+                            placeholder="請確認密碼" required>
                     </div>
                     <div class="mt-2 mt-md-3">
                         <button class="btn btn-major btn-block btn-sm" type="submit">註冊</button>
@@ -38,3 +39,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

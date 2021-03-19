@@ -9,7 +9,7 @@
                 <div class="text-right">
                     <small class="text-danger">* 為必填欄位</small>
                 </div>
-                <form action="{{ config.action }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ config.action }}" method="POST" class="needs-validation load" novalidate>
                     <div class="form-group">
                         <label for="name">支出名稱<span class="text-danger">*</span></label>
                         <input class="form-control custom-input" type="text" name="name" placeholder="請輸入支出名稱"
@@ -48,3 +48,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
