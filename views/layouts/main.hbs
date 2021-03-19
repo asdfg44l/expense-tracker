@@ -14,22 +14,21 @@
 </head>
 
 <body>
-  <div class="container-fluid">
-    {{!-- Navbar --}}
-    <nav class="navbar navbar-light bg-light px-2 border-bottom mb-5">
-      <a class="navbar-brand fw-bold" href="/">
-        {{#if user.name}}{{ user.name }}{{else}}我{{/if}}的家庭記帳本
-      </a>
-      {{!-- <a class="btn btn-major" href="/users/logout">登出</a> --}}
-      <div>
-        {{#if isAuthenticated}}
-        <a class="btn btn-info btn-sm" href="/users/logOut">登出</a>
-        {{else}}
-        <a class="btn btn-info btn-sm" href="/users/login">登入</a>
-        {{/if}}
-        <a class="btn btn-major btn-sm" href="/users/register">註冊</a>
-      </div>
-    </nav>
+  <nav class="navbar navbar-light bg-light px-2 border-bottom mb-5">
+    <a class="navbar-brand fw-bold" href="/">
+      {{#if user.name}}{{ user.name }}{{else}}我{{/if}}的記帳本
+    </a>
+    {{!-- <a class="btn btn-major" href="/users/logout">登出</a> --}}
+    <div>
+      {{#if isAuthenticated}}
+      <a class="btn btn-info btn-sm" href="/users/logOut">登出</a>
+      {{else}}
+      <a class="btn btn-info btn-sm" href="/users/login">登入</a>
+      {{/if}}
+      <a class="btn btn-major btn-sm" href="/users/register">註冊</a>
+    </div>
+  </nav>
+  <div class="container-fluid mb-3">
     {{!-- 分頁顯示 --}}
     {{{ body }}}
   </div>
