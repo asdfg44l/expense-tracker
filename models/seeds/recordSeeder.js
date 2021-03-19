@@ -32,17 +32,18 @@ db.once('open', async () => {
       let dbUser = await User.findOne({ email: defaultUser.email })
       if (dbUser) continue
 
-      //create new user in db
-      let newUser = await User.create({
-        name: defaultUser.name,
-        password: defaultUser.password,
-        email: defaultUser.email
-      })
       //generate hash
       let salt = await bcrypt.genSalt(10)
       let hash = await bcrypt.hash(defaultUser.password, salt)
+      //create new user in db
+      let newUser = await User.create({
+        name: defaultUser.name,
+        password: hash,
+        email: defaultUser.email
+      })
+
       //add new record
-      await Record.create({ ...defaultRecord, password: hash, userId: newUser._id })
+      await Record.create({ ...defaultRecord, userId: newUser._id })
     }
   } catch (e) {
     console.warn(e)
