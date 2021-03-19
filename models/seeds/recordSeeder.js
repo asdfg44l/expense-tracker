@@ -1,6 +1,7 @@
 const db = require('../../config/mongoose')
 const Record = require('../record')
 const User = require('../user')
+const bcrypt = require('bcryptjs')
 
 const defaultUsers = [
   {//#1, 2, 3
@@ -37,9 +38,11 @@ db.once('open', async () => {
         password: defaultUser.password,
         email: defaultUser.email
       })
-
+      //generate hash
+      let salt = await bcrypt.genSalt(10)
+      let hash = await bcrypt.hash(defaultUser.password, salt)
       //add new record
-      await Record.create({ ...defaultRecord, userId: newUser._id })
+      await Record.create({ ...defaultRecord, password: hash, userId: newUser._id })
     }
   } catch (e) {
     console.warn(e)
