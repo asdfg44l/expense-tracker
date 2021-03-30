@@ -13,8 +13,6 @@ const getRecordYear = require('../../util/getRecordYear')
 router.get('/', async (req, res) => {
     const userId = req.user._id
     const { category, year, month } = req.query
-    console.log('Year: ', year)
-    console.log('Month: ', month)
     try {
         //使用 aggregate 不需要使用 lean()
         //https://stackoverflow.com/questions/47768327/mongodb-using-lean-on-aggregate-function
